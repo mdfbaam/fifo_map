@@ -1,12 +1,16 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.17)
 
 project(fifo_map LANGUAGES CXX)
 
-add_executable(unit
-    src/fifo_map.hpp test/thirdparty/catch/catch.hpp test/unit.cpp
-)
+option(${PROJECT_NAME}_COMPILE_TESTS "Build tests for ${PROJECT_NAME}" OFF)
 
-target_include_directories(unit PRIVATE "test" "src" "test/thirdparty")
+if(${${PROJECT_NAME}_COMPILE_TESTS})
+    add_executable(unit
+        src/fifo_map.hpp test/thirdparty/catch/catch.hpp test/unit.cpp
+    )
+
+    target_include_directories(unit PRIVATE "test" "src" "test/thirdparty")
+endif()
 
 if(MSVC)
     set(CMAKE_CXX_FLAGS
